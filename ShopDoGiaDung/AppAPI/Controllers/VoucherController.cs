@@ -37,15 +37,26 @@ namespace AppAPI.Controllers
         }
 
         // PUT api/<VoucherController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [Route ("edit-voucher")]
+        public bool UpdateVoucher(Guid id ,string tenvoucher, int sotiengiam, DateTime ngayapdung, DateTime ngayketthuc, bool trangthai)
         {
+            Voucher voucher = irepos.GetAll().First(p => p.ID == id);
+            voucher.TenVocher = tenvoucher;
+            voucher.SoTienGiam = sotiengiam;
+            voucher.NgayApDung = ngayapdung;
+            voucher.NgayKetThuc = ngayketthuc;
+            voucher.TrangThai = trangthai;
+            return irepos.UpdateItem(voucher);
         }
 
         // DELETE api/<VoucherController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool DeleteVoucher(Guid id)
         {
+            Voucher voucher = irepos.GetAll().First(p => p.ID == id);
+
+            return irepos.DeleteItem(voucher);
         }
     }
 }
