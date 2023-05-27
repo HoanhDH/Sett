@@ -28,6 +28,7 @@ namespace AppAPI.Controllers
         public bool CreateHoaDon(Guid idnguoidung, DateTime ngaytao, DateTime ngaythanhtoan, bool trangthai)
         {
             HoaDon hoaDon = new HoaDon();
+            hoaDon.ID = Guid.NewGuid();
             hoaDon.IDNguoiDung = idnguoidung;
             hoaDon.NgayTao = ngaytao;
             hoaDon.NgayThanhToan = ngaythanhtoan;
@@ -37,14 +38,20 @@ namespace AppAPI.Controllers
 
         // PUT api/<HoaDonController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public bool Put(Guid id, Guid khuyenmai, bool trangthai)
         {
+            HoaDon hoaDon = irepos.GetAll().First(p => p.ID == id);
+
+            //hoaDon.khuyenMais = khuyenmai;
+            return irepos.UpdateItem(hoaDon);
         }
 
         // DELETE api/<HoaDonController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(Guid id)
         {
+            HoaDon hoadon = irepos.GetAll().First(p => p.ID == id);
+            return irepos.DeleteItem(hoadon);
         }
     }
 }

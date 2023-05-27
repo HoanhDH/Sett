@@ -37,14 +37,23 @@ namespace AppAPI.Controllers
 
         // PUT api/<HoaDonChiTietController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public bool Put(Guid id, int soluong, bool trangthai)
         {
+            HoaDonChiTiet hoaDonChiTiet = irepos.GetAll().First(p => p.ID == id);
+
+            hoaDonChiTiet.SoLuong = soluong;
+            // hoaDonChiTiet.IDSanPham = trangthai;
+            // return irepos.UpdateItem(hoadonchitiet);\
+            return irepos.UpdateItem(hoaDonChiTiet);
         }
+        
 
         // DELETE api/<HoaDonChiTietController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(Guid id)
         {
+            HoaDonChiTiet hoadon = irepos.GetAll().First(p => p.ID == id);
+            return irepos.DeleteItem(hoadon);
         }
     }
 }
